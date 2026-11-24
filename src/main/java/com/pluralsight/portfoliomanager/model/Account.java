@@ -3,8 +3,8 @@ package com.pluralsight.portfoliomanager.model;
 import java.math.BigDecimal;
 
 public abstract class Account implements Valuable{
-    private int accountNumber;
-    private String name;
+    private final int accountNumber;
+    private final String name;
     private BigDecimal balance;
 
     public Account(int accountNumber, String name, BigDecimal balance) {

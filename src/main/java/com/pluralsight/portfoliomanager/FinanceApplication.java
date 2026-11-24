@@ -11,7 +11,7 @@ public class FinanceApplication {
         Gold gold = new Gold("Gold coins", new BigDecimal("12000.00"), 5.0);
         Jewelry ring = new Jewelry("Grandma's ring", new BigDecimal("2500.00"), 14.0);
         BankAccount account1 = new BankAccount(123, "Pam", new BigDecimal("12500"));
-        //BankAccount account2 = new BankAccount(456, "Gary", new BigDecimal("1500"));
+        //Valuable account2 = new BankAccount(456, "Gary", new BigDecimal("1500"));
 
         account1.deposit(new BigDecimal("100"));
         System.out.println(house.getName() + ": $" + house.getValue());
