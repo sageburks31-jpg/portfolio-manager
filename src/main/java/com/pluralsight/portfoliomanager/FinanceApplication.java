@@ -19,10 +19,11 @@ public class FinanceApplication {
         System.out.println(ring.getName() + ": $" + ring.getValue()+"\n");
 
         Portfolio portfolio = new Portfolio();
-        portfolio.addToList(gold);
         portfolio.addToList(ring);
+        portfolio.addToList(gold);
+        portfolio.addToList(account1);
         System.out.println(portfolio.toRow());
-        System.out.println(portfolio.getMostValuable());
-        System.out.println(portfolio.getLeastValuable());
+        System.out.println(portfolio.getStringOfValuable(portfolio.getMostValuable()));
+        System.out.println(portfolio.getStringOfValuable(portfolio.getLeastValuable()));
     }
 }

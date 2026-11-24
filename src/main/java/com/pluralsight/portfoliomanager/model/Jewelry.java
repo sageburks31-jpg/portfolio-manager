@@ -3,7 +3,7 @@ package com.pluralsight.portfoliomanager.model;
 import java.math.BigDecimal;
 
 public class Jewelry extends FixedAsset {
-    private double karat;
+    private final double karat;
 
     public Jewelry(String name, BigDecimal marketValue, double karat) {
         super(name, marketValue);

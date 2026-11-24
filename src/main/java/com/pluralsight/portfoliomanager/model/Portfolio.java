@@ -31,74 +31,91 @@ public class Portfolio {
     public void addToList(Valuable valuable){valuableList.add(valuable);}
     public void removeFromList(int index){valuableList.remove(index);}
 
-    public BigDecimal getTotalValue() {
+    public BigDecimal getStringTotalValue() {
         BigDecimal value = new BigDecimal("0.0");
         for (Valuable valuable: valuableList) {value = value.add(valuable.getValue());}
         return value;
     }
-    private String getListOfNames() {
+    private String getStringOfNameList() {
         StringBuilder names = new StringBuilder("[");
-
         for (int i = 0; i <= getValuableList().size()-1; i++) {
-            FixedAsset fixedAsset;
 
-            try {fixedAsset = (FixedAsset) getValuableList().get(i);}
-            catch (RuntimeException e) {continue;}
+            String name = getName(getValuableList().get(i));
 
-            names.append(fixedAsset.getName()).append(": ").append(fixedAsset.getValue());
+            BigDecimal value = switch (getValuableList().get(i).getClass().getSuperclass().getSimpleName()) {
+                case "FixedAsset" -> {
+                    FixedAsset fixedAsset1 = (FixedAsset) getValuableList().get(i);
+                    yield fixedAsset1.getValue();
+                }
+                case "Account" -> {
+                    Account fixedAsset1 = (Account) getValuableList().get(i);
+                    yield fixedAsset1.getValue();
+                }
+                default -> new BigDecimal("0");
+            };
+
+            names.append(name).append(": ").append(value);
             if (i != getValuableList().size()-1) {names.append(", ");}
         }
         names.append("]");
         return names.toString();
     }
-    public String getMostValuable() {
+    public String getStringOfValuable(Valuable valuable) {
         StringBuilder names = new StringBuilder("most: [");
+
+        String name = getName(valuable);
+        names.append(name).append(": ").append(valuable.getValue());
+        names.append("]");
+
+        return names.toString();
+    }
+
+    private String getName(Valuable valuable) {
+        return switch (valuable.getClass().getSuperclass().getSimpleName()){
+            case "FixedAsset" -> {
+                FixedAsset fixedAsset1 = (FixedAsset) valuable;
+                yield fixedAsset1.getName();
+            }
+            case "Account" -> {
+                Account fixedAsset1 = (Account) valuable;
+                yield fixedAsset1.getName();
+            }
+            default -> valuable.getClass().getSuperclass().getSimpleName();
+        };
+    }
+
+    public Valuable getMostValuable() {
         double amount = 0;
-        FixedAsset fixedAsset;
-        FixedAsset mostValuableAsset = null;
+        Valuable mostValuableAsset = getValuableList().get(0);
 
         for (Valuable valuable: getValuableList()) {
-            try {fixedAsset = (FixedAsset) valuable;}
-            catch (RuntimeException e) {continue;}
-
             if (amount < Double.parseDouble(String.valueOf(valuable.getValue()))) {
                 amount = Double.parseDouble(String.valueOf(valuable.getValue()));
-                mostValuableAsset = fixedAsset;
+                mostValuableAsset = valuable;
             }
         }
         assert mostValuableAsset != null;
-        names.append(mostValuableAsset.getName()).append(": ").append(amount);
-        names.append("]");
-
-        return names.toString();
+        return mostValuableAsset;
     }
-    public String getLeastValuable() {
-        StringBuilder names = new StringBuilder("least: [");
+    public Valuable getLeastValuable() {
         double amount = Double.parseDouble(String.valueOf(getValuableList().get(0).getValue()));
-        FixedAsset fixedAsset;
-        FixedAsset leastValuableAsset = null;
+        Valuable leastValuableAsset = getValuableList().get(0);
 
         for (Valuable valuable: getValuableList()) {
-            try {fixedAsset = (FixedAsset) valuable;}
-            catch (RuntimeException e) {continue;}
-
             if (amount > Double.parseDouble(String.valueOf(valuable.getValue()))) {
                 amount = Double.parseDouble(String.valueOf(valuable.getValue()));
-                leastValuableAsset=fixedAsset;
+                leastValuableAsset=valuable;
             }
         }
         assert leastValuableAsset != null;
-        names.append(leastValuableAsset.getName()).append(": ").append(amount);
-        names.append("]");
-
-        return names.toString();
+        return leastValuableAsset;
     }
 
     public String toRow(){
-        return String.format("Name: %s |Owner: %s |List of Valuables: %s |Total Value: %s",
+        return String.format("Name: %s | Owner: %s | List of Valuables: %s | Total Value: %s",
                 getName(),
                 getOwner(),
-                getListOfNames(),
-                getTotalValue());
+                getStringOfNameList(),
+                getStringTotalValue());
     }
 }
