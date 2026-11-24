@@ -17,7 +17,5 @@ public class FinanceApplication {
         System.out.println(house.getName() + ": $" + house.getValue());
         System.out.println(gold.getName() + ": $" + gold.getValue());
         System.out.println(ring.getName() + ": $" + ring.getValue());
-
-        // TODO: Workbook 6a p. 30, Part 2
     }
 }
