@@ -16,6 +16,13 @@ public class FinanceApplication {
         account1.deposit(new BigDecimal("100"));
         System.out.println(house.getName() + ": $" + house.getValue());
         System.out.println(gold.getName() + ": $" + gold.getValue());
-        System.out.println(ring.getName() + ": $" + ring.getValue());
+        System.out.println(ring.getName() + ": $" + ring.getValue()+"\n");
+
+        Portfolio portfolio = new Portfolio();
+        portfolio.addToList(gold);
+        portfolio.addToList(ring);
+        System.out.println(portfolio.toRow());
+        System.out.println(portfolio.getMostValuable());
+        System.out.println(portfolio.getLeastValuable());
     }
 }
