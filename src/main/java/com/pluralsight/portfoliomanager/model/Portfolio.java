@@ -38,27 +38,13 @@ public class Portfolio implements Valuable{
     }
     @Override
     public String getValue() {
-        StringBuilder names = new StringBuilder("[");
+        StringBuilder names = new StringBuilder();
         for (int i = 0; i <= getValuableList().size()-1; i++) {
 
             String name = getName(getValuableList().get(i));
-
-            BigDecimal value = switch (getValuableList().get(i).getClass().getSuperclass().getSimpleName()) {
-                case "FixedAsset" -> {
-                    FixedAsset fixedAsset1 = (FixedAsset) getValuableList().get(i);
-                    yield new BigDecimal(fixedAsset1.getValue());
-                }
-                case "Account" -> {
-                    Account fixedAsset1 = (Account) getValuableList().get(i);
-                    yield new BigDecimal(fixedAsset1.getValue());
-                }
-                default -> new BigDecimal("0");
-            };
-
-            names.append(name).append(": ").append(value);
+            names.append(name);
             if (i != getValuableList().size()-1) {names.append(", ");}
         }
-        names.append("]");
         return names.toString();
     }
     public String getStringOfValuable(Valuable valuable) {
