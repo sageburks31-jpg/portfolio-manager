@@ -30,7 +30,7 @@ public abstract class Account implements Valuable{
     }
 
     @Override
-    public BigDecimal getValue() {
+    public String getValue() {
         return balance;
     }
 }

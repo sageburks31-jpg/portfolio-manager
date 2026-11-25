@@ -3,7 +3,7 @@ package com.pluralsight.portfoliomanager.model;
 import java.math.BigDecimal;
 import java.util.*;
 
-public class Portfolio {
+public class Portfolio implements Valuable{
     String name;
     String owner;
     List<Valuable> valuableList = new ArrayList<>();
@@ -33,10 +33,11 @@ public class Portfolio {
 
     public BigDecimal getStringTotalValue() {
         BigDecimal value = new BigDecimal("0.0");
-        for (Valuable valuable: valuableList) {value = value.add(valuable.getValue());}
+        for (Valuable valuable: valuableList) {value = value.add(new BigDecimal(valuable.getValue()));}
         return value;
     }
-    private String getStringOfNameList() {
+    @Override
+    public String getValue() {
         StringBuilder names = new StringBuilder("[");
         for (int i = 0; i <= getValuableList().size()-1; i++) {
 
@@ -45,11 +46,11 @@ public class Portfolio {
             BigDecimal value = switch (getValuableList().get(i).getClass().getSuperclass().getSimpleName()) {
                 case "FixedAsset" -> {
                     FixedAsset fixedAsset1 = (FixedAsset) getValuableList().get(i);
-                    yield fixedAsset1.getValue();
+                    yield new BigDecimal(fixedAsset1.getValue());
                 }
                 case "Account" -> {
                     Account fixedAsset1 = (Account) getValuableList().get(i);
-                    yield fixedAsset1.getValue();
+                    yield new BigDecimal(fixedAsset1.getValue());
                 }
                 default -> new BigDecimal("0");
             };
@@ -115,7 +116,7 @@ public class Portfolio {
         return String.format("Name: %s | Owner: %s | List of Valuables: %s | Total Value: %s",
                 getName(),
                 getOwner(),
-                getStringOfNameList(),
+                getValue(),
                 getStringTotalValue());
     }
 }

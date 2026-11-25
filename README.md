@@ -25,4 +25,4 @@ ans - the following are the methods that account2 has access to:
 
 Why?
 
-because account2 and 1 are define from to separate classes
+because account2 and 1 are define as two separate classes when they are initialize

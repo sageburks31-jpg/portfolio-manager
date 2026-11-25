@@ -16,7 +16,7 @@ public abstract class FixedAsset implements Valuable{
     }
 
     @Override
-    public BigDecimal getValue() {
+    public String getValue() {
         return marketValue;
     }
 }
