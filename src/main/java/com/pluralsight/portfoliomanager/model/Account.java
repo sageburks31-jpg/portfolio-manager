@@ -31,6 +31,6 @@ public abstract class Account implements Valuable{
 
     @Override
     public String getValue() {
-        return balance;
+        return balance+"";
     }
 }
